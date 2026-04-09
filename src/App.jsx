@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useMemo } from 'react'
 
 // ─── Mock Data ───────────────────────────────────────────────────────────────
 const CATEGORIES = [
@@ -7,30 +7,38 @@ const CATEGORIES = [
 ]
 
 const MEME_DATA = [
-  { id: 1,  emoji: '😂', label: 'Dead',          category: 'Reactions',  aspect: 'tall',   isGif: true  },
-  { id: 2,  emoji: '🔥', label: 'Lit',           category: 'Hype',       aspect: 'square', isGif: false },
-  { id: 3,  emoji: '😬', label: 'Yikes',         category: 'Awkward',    aspect: 'wide',   isGif: true  },
-  { id: 4,  emoji: '💀', label: "I'm Dead",      category: 'Savage',     aspect: 'tall',   isGif: true  },
-  { id: 5,  emoji: '🤔', label: 'Confused',      category: 'Confused',   aspect: 'square', isGif: false },
-  { id: 6,  emoji: '😭', label: 'Too Real',      category: 'Relatable',  aspect: 'tall',   isGif: true  },
-  { id: 7,  emoji: '🥺', label: 'Please',        category: 'Wholesome',  aspect: 'square', isGif: false },
-  { id: 8,  emoji: '🙅', label: 'Hard No',       category: 'No Thanks',  aspect: 'wide',   isGif: true  },
-  { id: 9,  emoji: '💯', label: 'Facts',         category: 'Agreement',  aspect: 'square', isGif: false },
-  { id: 10, emoji: '😱', label: 'No Way',        category: 'Shock',      aspect: 'tall',   isGif: true  },
-  { id: 11, emoji: '🤣', label: 'Rolling',       category: 'Reactions',  aspect: 'wide',   isGif: true  },
-  { id: 12, emoji: '🚀', label: "Let's Go",      category: 'Hype',       aspect: 'tall',   isGif: false },
-  { id: 13, emoji: '😅', label: 'Awkward...',    category: 'Awkward',    aspect: 'square', isGif: true  },
-  { id: 14, emoji: '😤', label: 'Not It',        category: 'Savage',     aspect: 'wide',   isGif: false },
-  { id: 15, emoji: '🫠', label: 'Melting',       category: 'Relatable',  aspect: 'tall',   isGif: true  },
-  { id: 16, emoji: '🤯', label: 'Mind Blown',    category: 'Shock',      aspect: 'square', isGif: true  },
-  { id: 17, emoji: '🫶', label: 'Big Love',      category: 'Wholesome',  aspect: 'tall',   isGif: false },
-  { id: 18, emoji: '🙌', label: 'Agreed',        category: 'Agreement',  aspect: 'wide',   isGif: true  },
-  { id: 19, emoji: '😵', label: 'Dizzy',         category: 'Confused',   aspect: 'square', isGif: true  },
-  { id: 20, emoji: '🫡', label: 'Understood',    category: 'No Thanks',  aspect: 'tall',   isGif: false },
+  { id: 1,  emoji: '😂', label: 'Dead',          category: 'Reactions',  aspect: 'tall',   isGif: true,  stashCount: 14200, trendingScore: 10820, isNew: false },
+  { id: 2,  emoji: '🔥', label: 'Lit',           category: 'Hype',       aspect: 'square', isGif: false, stashCount: 8900,  trendingScore: 6480,  isNew: false },
+  { id: 3,  emoji: '😬', label: 'Yikes',         category: 'Awkward',    aspect: 'wide',   isGif: true,  stashCount: 5600,  trendingScore: 4150,  isNew: false },
+  { id: 4,  emoji: '💀', label: "I'm Dead",      category: 'Savage',     aspect: 'tall',   isGif: true,  stashCount: 11300, trendingScore: 8340,  isNew: false },
+  { id: 5,  emoji: '🤔', label: 'Confused',      category: 'Confused',   aspect: 'square', isGif: false, stashCount: 3400,  trendingScore: 2190,  isNew: false },
+  { id: 6,  emoji: '😭', label: 'Too Real',      category: 'Relatable',  aspect: 'tall',   isGif: true,  stashCount: 9800,  trendingScore: 7510,  isNew: false },
+  { id: 7,  emoji: '🥺', label: 'Please',        category: 'Wholesome',  aspect: 'square', isGif: false, stashCount: 7200,  trendingScore: 5290,  isNew: false },
+  { id: 8,  emoji: '🙅', label: 'Hard No',       category: 'No Thanks',  aspect: 'wide',   isGif: true,  stashCount: 4100,  trendingScore: 2870,  isNew: false },
+  { id: 9,  emoji: '💯', label: 'Facts',         category: 'Agreement',  aspect: 'square', isGif: false, stashCount: 6700,  trendingScore: 4960,  isNew: false },
+  { id: 10, emoji: '😱', label: 'No Way',        category: 'Shock',      aspect: 'tall',   isGif: true,  stashCount: 12800, trendingScore: 11230, isNew: false },
+  { id: 11, emoji: '🤣', label: 'Rolling',       category: 'Reactions',  aspect: 'wide',   isGif: true,  stashCount: 10500, trendingScore: 7920,  isNew: false },
+  { id: 12, emoji: '🚀', label: "Let's Go",      category: 'Hype',       aspect: 'tall',   isGif: false, stashCount: 7800,  trendingScore: 5600,  isNew: false },
+  { id: 13, emoji: '😅', label: 'Awkward...',    category: 'Awkward',    aspect: 'square', isGif: true,  stashCount: 2900,  trendingScore: 1840,  isNew: false },
+  { id: 14, emoji: '😤', label: 'Not It',        category: 'Savage',     aspect: 'wide',   isGif: false, stashCount: 1800,  trendingScore: 1050,  isNew: false },
+  { id: 15, emoji: '🫠', label: 'Melting',       category: 'Relatable',  aspect: 'tall',   isGif: true,  stashCount: 9100,  trendingScore: 6730,  isNew: false },
+  { id: 16, emoji: '🤯', label: 'Mind Blown',    category: 'Shock',      aspect: 'square', isGif: true,  stashCount: 13500, trendingScore: 10180, isNew: false },
+  { id: 17, emoji: '🫶', label: 'Big Love',      category: 'Wholesome',  aspect: 'tall',   isGif: false, stashCount: 5300,  trendingScore: 3640,  isNew: false },
+  { id: 18, emoji: '🙌', label: 'Agreed',        category: 'Agreement',  aspect: 'wide',   isGif: true,  stashCount: 8400,  trendingScore: 6390,  isNew: false },
+  { id: 19, emoji: '😵', label: 'Dizzy',         category: 'Confused',   aspect: 'square', isGif: true,  stashCount: 2200,  trendingScore: 1380,  isNew: false },
+  { id: 20, emoji: '🫡', label: 'Understood',    category: 'No Thanks',  aspect: 'tall',   isGif: false, stashCount: 1400,  trendingScore: 820,   isNew: false },
+  // New items — discovery window
+  { id: 21, emoji: '🫨', label: 'Shaking',       category: 'Reactions',  aspect: 'square', isGif: true,  stashCount: 42,    trendingScore: 390,   isNew: true  },
+  { id: 22, emoji: '🥴', label: 'Woozy',         category: 'Relatable',  aspect: 'tall',   isGif: false, stashCount: 18,    trendingScore: 210,   isNew: true  },
+  { id: 23, emoji: '🚨', label: 'Red Alert',     category: 'Hype',       aspect: 'wide',   isGif: true,  stashCount: 7,     trendingScore: 520,   isNew: true  },
+  { id: 24, emoji: '😮‍💨', label: 'Phew',          category: 'Awkward',    aspect: 'square', isGif: false, stashCount: 31,    trendingScore: 175,   isNew: true  },
+  { id: 25, emoji: '🫥', label: 'Ghost Mode',    category: 'No Thanks',  aspect: 'tall',   isGif: true,  stashCount: 5,     trendingScore: 290,   isNew: true  },
 ]
 
-const TRENDING_IDS = [10, 1, 16, 4, 11, 6, 3, 18, 15, 9, 2, 7]
-const TRENDING_DATA = TRENDING_IDS.map(id => MEME_DATA.find(m => m.id === id)).filter(Boolean)
+// Top 12 by trendingScore for Trending page
+const TRENDING_DATA = [...MEME_DATA]
+  .sort((a, b) => b.trendingScore - a.trendingScore)
+  .slice(0, 12)
 
 const FREE_LIMIT = 30
 
@@ -45,6 +53,11 @@ function getBgColor(emoji) {
   const palette = ['#1a1a1a', '#1c1408', '#0d1a0d', '#1a0d0d', '#0d0d1a', '#1a1a0d', '#0d1a1a']
   const code = emoji.codePointAt(0) || 0
   return palette[code % palette.length]
+}
+
+function formatCount(n) {
+  if (n >= 1000) return `${(n / 1000).toFixed(1).replace(/\.0$/, '')}K`
+  return `${n}`
 }
 
 // ─── Components ──────────────────────────────────────────────────────────────
@@ -157,7 +170,7 @@ function ComingSoonModal({ visible, onClose }) {
   )
 }
 
-function MemeCard({ item, onStash, onCopy, isStashed }) {
+function MemeCard({ item, onStash, onCopy, isStashed, rank }) {
   const [hovered, setHovered] = useState(false)
   const h = aspectHeight(item.aspect)
 
@@ -182,6 +195,8 @@ function MemeCard({ item, onStash, onCopy, isStashed }) {
         fontFamily: 'Space Mono, monospace', fontSize: 10, color: '#666',
         marginTop: 8, letterSpacing: 1, textTransform: 'uppercase',
       }}>{item.label}</div>
+
+      {/* GIF badge */}
       {item.isGif && (
         <div style={{
           position: 'absolute', top: 8, left: 8, background: '#ff3c00',
@@ -189,6 +204,17 @@ function MemeCard({ item, onStash, onCopy, isStashed }) {
           padding: '2px 6px', borderRadius: 4, letterSpacing: 1,
         }}>GIF</div>
       )}
+
+      {/* Trend rank badge */}
+      {rank != null && (
+        <div style={{
+          position: 'absolute', top: item.isGif ? 28 : 8, left: 8,
+          background: '#ff3c00', color: '#fff', fontSize: 9,
+          fontFamily: 'Bebas Neue, sans-serif', padding: '2px 6px',
+          borderRadius: 4, letterSpacing: 1,
+        }}>#{rank}</div>
+      )}
+
       {isStashed && (
         <div style={{ position: 'absolute', top: 8, right: 8, fontSize: 14 }}>📌</div>
       )}
@@ -222,12 +248,18 @@ function MemeCard({ item, onStash, onCopy, isStashed }) {
         >
           COPY
         </button>
+        <div style={{
+          fontFamily: 'Space Mono, monospace', fontSize: 10, color: '#777',
+          letterSpacing: 0.5,
+        }}>
+          {formatCount(item.stashCount)} stashed
+        </div>
       </div>
     </div>
   )
 }
 
-function MemeGrid({ items, onStash, onCopy, stashedIds }) {
+function MemeGrid({ items, onStash, onCopy, stashedIds, rankMap }) {
   const col1 = items.filter((_, i) => i % 2 === 0)
   const col2 = items.filter((_, i) => i % 2 === 1)
 
@@ -235,15 +267,33 @@ function MemeGrid({ items, onStash, onCopy, stashedIds }) {
     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, padding: '0 12px 12px' }}>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
         {col1.map(item => (
-          <MemeCard key={item.id} item={item} onStash={onStash} onCopy={onCopy} isStashed={stashedIds.has(item.id)} />
+          <MemeCard
+            key={item.id} item={item} onStash={onStash} onCopy={onCopy}
+            isStashed={stashedIds.has(item.id)}
+            rank={rankMap ? rankMap[item.id] : undefined}
+          />
         ))}
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
         {col2.map(item => (
-          <MemeCard key={item.id} item={item} onStash={onStash} onCopy={onCopy} isStashed={stashedIds.has(item.id)} />
+          <MemeCard
+            key={item.id} item={item} onStash={onStash} onCopy={onCopy}
+            isStashed={stashedIds.has(item.id)}
+            rank={rankMap ? rankMap[item.id] : undefined}
+          />
         ))}
       </div>
     </div>
+  )
+}
+
+function SectionLabel({ children }) {
+  return (
+    <div style={{
+      padding: '8px 12px 4px',
+      fontFamily: 'Bebas Neue, sans-serif', fontSize: 13, color: '#ff3c00',
+      letterSpacing: 3,
+    }}>{children}</div>
   )
 }
 
@@ -272,18 +322,68 @@ function CategoryChips({ selected, onSelect }) {
   )
 }
 
+const SORT_OPTIONS = [
+  { id: 'most-stashed', label: 'Most Stashed' },
+  { id: 'trending',     label: 'Trending' },
+  { id: 'new',          label: 'New' },
+]
+
+function SortChips({ selected, onSelect }) {
+  return (
+    <div style={{
+      display: 'flex', gap: 8, padding: '0 12px 12px',
+      scrollbarWidth: 'none', msOverflowStyle: 'none',
+    }}>
+      {SORT_OPTIONS.map(opt => (
+        <button
+          key={opt.id}
+          onClick={() => onSelect(opt.id)}
+          style={{
+            flexShrink: 0, padding: '6px 14px',
+            background: selected === opt.id ? '#ff3c00' : '#1a1a1a',
+            color: selected === opt.id ? '#fff' : '#888',
+            border: selected === opt.id ? 'none' : '1px solid #2a2a2a',
+            borderRadius: 20, fontFamily: 'Space Mono, monospace',
+            fontSize: 11, cursor: 'pointer', letterSpacing: 0.5,
+            transition: 'all 0.15s',
+          }}
+        >{opt.label}</button>
+      ))}
+    </div>
+  )
+}
+
 // ─── Pages ───────────────────────────────────────────────────────────────────
 
 function LibraryPage({ onStash, onCopy, stashedIds }) {
   const [category, setCategory] = useState('All')
   const [search, setSearch] = useState('')
+  const [sort, setSort] = useState('most-stashed')
 
-  const filtered = MEME_DATA.filter(m => {
-    const matchCat = category === 'All' || m.category === category
-    const matchSearch = m.label.toLowerCase().includes(search.toLowerCase()) ||
-                        m.category.toLowerCase().includes(search.toLowerCase())
-    return matchCat && matchSearch
-  })
+  const { newItems, mainItems } = useMemo(() => {
+    const base = MEME_DATA.filter(m => {
+      const matchCat = category === 'All' || m.category === category
+      const matchSearch = m.label.toLowerCase().includes(search.toLowerCase()) ||
+                          m.category.toLowerCase().includes(search.toLowerCase())
+      return matchCat && matchSearch
+    })
+
+    if (sort === 'new') {
+      return { newItems: [], mainItems: base.filter(m => m.isNew) }
+    }
+
+    const newOnes = base.filter(m => m.isNew)
+    const rest = base.filter(m => !m.isNew)
+
+    if (sort === 'trending') {
+      rest.sort((a, b) => b.trendingScore - a.trendingScore)
+    } else {
+      // most-stashed
+      rest.sort((a, b) => b.stashCount - a.stashCount)
+    }
+
+    return { newItems: newOnes, mainItems: rest }
+  }, [category, search, sort])
 
   return (
     <div style={{ flex: 1, overflowY: 'auto' }}>
@@ -301,12 +401,48 @@ function LibraryPage({ onStash, onCopy, stashedIds }) {
         />
       </div>
       <CategoryChips selected={category} onSelect={setCategory} />
-      <MemeGrid items={filtered} onStash={onStash} onCopy={onCopy} stashedIds={stashedIds} />
+      <SortChips selected={sort} onSelect={setSort} />
+
+      {newItems.length > 0 && (
+        <>
+          <SectionLabel>🆕 New</SectionLabel>
+          <MemeGrid items={newItems} onStash={onStash} onCopy={onCopy} stashedIds={stashedIds} />
+        </>
+      )}
+
+      {mainItems.length > 0 && (
+        <>
+          {newItems.length > 0 && (
+            <SectionLabel>
+              {sort === 'trending' ? '📈 Trending' : '🔥 Most Stashed'}
+            </SectionLabel>
+          )}
+          <MemeGrid items={mainItems} onStash={onStash} onCopy={onCopy} stashedIds={stashedIds} />
+        </>
+      )}
+
+      {newItems.length === 0 && mainItems.length === 0 && (
+        <div style={{
+          display: 'flex', flexDirection: 'column', alignItems: 'center',
+          padding: 60, gap: 12,
+        }}>
+          <div style={{ fontSize: 36 }}>🔍</div>
+          <div style={{
+            fontFamily: 'Space Mono, monospace', fontSize: 12, color: '#555', textAlign: 'center',
+          }}>No reactions found</div>
+        </div>
+      )}
     </div>
   )
 }
 
 function TrendingPage({ onStash, onCopy, stashedIds }) {
+  const rankMap = useMemo(() => {
+    const map = {}
+    TRENDING_DATA.forEach((item, i) => { map[item.id] = i + 1 })
+    return map
+  }, [])
+
   return (
     <div style={{ flex: 1, overflowY: 'auto' }}>
       <div style={{ padding: '16px 12px 12px' }}>
@@ -318,7 +454,10 @@ function TrendingPage({ onStash, onCopy, stashedIds }) {
           fontFamily: 'Space Mono, monospace', fontSize: 10, color: '#555',
         }}>Top reactions everyone&apos;s using right now</div>
       </div>
-      <MemeGrid items={TRENDING_DATA} onStash={onStash} onCopy={onCopy} stashedIds={stashedIds} />
+      <MemeGrid
+        items={TRENDING_DATA} onStash={onStash} onCopy={onCopy}
+        stashedIds={stashedIds} rankMap={rankMap}
+      />
     </div>
   )
 }
@@ -528,7 +667,7 @@ function AccountPage({ stashCount, onUpgradeClick }) {
             padding: '16px',
           }}>
             <div style={{ fontFamily: 'Space Mono, monospace', fontSize: 12, color: '#555' }}>Version</div>
-            <div style={{ fontFamily: 'Space Mono, monospace', fontSize: 11, color: '#444' }}>2.0.0</div>
+            <div style={{ fontFamily: 'Space Mono, monospace', fontSize: 11, color: '#444' }}>3.0.0</div>
           </div>
         </div>
       </div>
