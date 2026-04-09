@@ -427,18 +427,128 @@ function SortChips({ selected, onSelect }) {
 
 // ─── Pages ───────────────────────────────────────────────────────────────────
 
+function SubmitModal({ visible, onClose, onSubmit }) {
+  const [category, setCategory] = useState('')
+  const [label, setLabel] = useState('')
+
+  if (!visible) return null
+
+  const handleSubmit = () => {
+    onSubmit()
+    setCategory('')
+    setLabel('')
+  }
+
+  return (
+    <div
+      style={{
+        position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.85)',
+        display: 'flex', alignItems: 'flex-end', justifyContent: 'center',
+        zIndex: 950, padding: '0 0 80px',
+      }}
+      onClick={onClose}
+    >
+      <div
+        style={{
+          background: '#141414', borderRadius: 20, padding: '24px', width: '100%',
+          maxWidth: 430, border: '1px solid #222', boxShadow: '0 -8px 40px rgba(0,0,0,0.6)',
+        }}
+        onClick={e => e.stopPropagation()}
+      >
+        <div style={{
+          fontFamily: 'Bebas Neue, sans-serif', fontSize: 22, letterSpacing: 3,
+          color: '#fff', marginBottom: 20,
+        }}>Submit a Reaction</div>
+
+        {/* File upload area */}
+        <div style={{
+          border: '2px dashed #333', borderRadius: 12, padding: '28px 16px',
+          textAlign: 'center', marginBottom: 16, color: '#555',
+          fontFamily: 'Space Mono, monospace', fontSize: 12, cursor: 'pointer',
+        }}>
+          Tap to select GIF or image
+        </div>
+
+        {/* Category dropdown */}
+        <select
+          value={category}
+          onChange={e => setCategory(e.target.value)}
+          style={{
+            width: '100%', padding: '10px 12px', background: '#1a1a1a',
+            border: '1px solid #2a2a2a', borderRadius: 10,
+            color: category ? '#fff' : '#555',
+            fontFamily: 'Space Mono, monospace', fontSize: 12,
+            outline: 'none', marginBottom: 12, appearance: 'none',
+          }}
+        >
+          <option value="" disabled>Select category</option>
+          {CATEGORIES.filter(c => c !== 'All').map(c => (
+            <option key={c} value={c} style={{ color: '#fff', background: '#1a1a1a' }}>{c}</option>
+          ))}
+        </select>
+
+        {/* Label input */}
+        <input
+          value={label}
+          onChange={e => setLabel(e.target.value)}
+          placeholder="Label (e.g. Dead, Lit...)"
+          style={{
+            width: '100%', padding: '10px 12px', background: '#1a1a1a',
+            border: '1px solid #2a2a2a', borderRadius: 10, color: '#fff',
+            fontFamily: 'Space Mono, monospace', fontSize: 12,
+            outline: 'none', marginBottom: 20,
+          }}
+        />
+
+        {/* Submit button */}
+        <button
+          onClick={handleSubmit}
+          style={{
+            width: '100%', padding: '14px', background: '#ff3c00', color: '#fff',
+            border: 'none', borderRadius: 12, fontFamily: 'Bebas Neue, sans-serif',
+            fontSize: 18, letterSpacing: 2, cursor: 'pointer',
+          }}
+        >SUBMIT</button>
+      </div>
+    </div>
+  )
+}
+
 function FeedPage({ onStash, onCopy, stashedIds }) {
+  const [showSubmit, setShowSubmit] = useState(false)
+  const [submitToast, setSubmitToast] = useState({ visible: false, message: '' })
+
+  const handleSubmit = () => {
+    setShowSubmit(false)
+    setSubmitToast({ visible: true, message: 'Submitted for review! We will add it if it is fire' })
+    setTimeout(() => setSubmitToast({ visible: false, message: '' }), 2500)
+  }
+
   return (
     <div style={{ flex: 1, overflowY: 'auto' }}>
-      <div style={{ padding: '12px 12px 4px' }}>
+      <div style={{
+        padding: '12px 12px 4px', display: 'flex',
+        alignItems: 'center', justifyContent: 'space-between',
+      }}>
         <div style={{
           fontFamily: 'Space Mono, monospace', fontSize: 10, color: '#555', letterSpacing: 1,
         }}>Recently added reactions, newest first</div>
+        <button
+          onClick={() => setShowSubmit(true)}
+          style={{
+            width: 28, height: 28, borderRadius: '50%', background: '#ff3c00',
+            color: '#fff', border: 'none', fontSize: 20, lineHeight: 1,
+            cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
+            flexShrink: 0,
+          }}
+        >+</button>
       </div>
       <MemeGrid
         items={FEED_DATA} onStash={onStash} onCopy={onCopy}
         stashedIds={stashedIds} showTimestamp
       />
+      <SubmitModal visible={showSubmit} onClose={() => setShowSubmit(false)} onSubmit={handleSubmit} />
+      <Toast message={submitToast.message} visible={submitToast.visible} />
     </div>
   )
 }
