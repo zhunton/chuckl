@@ -7,48 +7,40 @@ const CATEGORIES = [
 ]
 
 const MEME_DATA = [
-  { id: 1,  emoji: '😂', label: 'Dead',          category: 'Reactions',  aspect: 'tall',   isGif: true,  stashCount: 14200, trendingScore: 10820, isNew: false },
-  { id: 2,  emoji: '🔥', label: 'Lit',           category: 'Hype',       aspect: 'square', isGif: false, stashCount: 8900,  trendingScore: 6480,  isNew: false },
-  { id: 3,  emoji: '😬', label: 'Yikes',         category: 'Awkward',    aspect: 'wide',   isGif: true,  stashCount: 5600,  trendingScore: 4150,  isNew: false },
-  { id: 4,  emoji: '💀', label: "I'm Dead",      category: 'Savage',     aspect: 'tall',   isGif: true,  stashCount: 11300, trendingScore: 8340,  isNew: false },
-  { id: 5,  emoji: '🤔', label: 'Confused',      category: 'Confused',   aspect: 'square', isGif: false, stashCount: 3400,  trendingScore: 2190,  isNew: false },
-  { id: 6,  emoji: '😭', label: 'Too Real',      category: 'Relatable',  aspect: 'tall',   isGif: true,  stashCount: 9800,  trendingScore: 7510,  isNew: false },
-  { id: 7,  emoji: '🥺', label: 'Please',        category: 'Wholesome',  aspect: 'square', isGif: false, stashCount: 7200,  trendingScore: 5290,  isNew: false },
-  { id: 8,  emoji: '🙅', label: 'Hard No',       category: 'No Thanks',  aspect: 'wide',   isGif: true,  stashCount: 4100,  trendingScore: 2870,  isNew: false },
-  { id: 9,  emoji: '💯', label: 'Facts',         category: 'Agreement',  aspect: 'square', isGif: false, stashCount: 6700,  trendingScore: 4960,  isNew: false },
-  { id: 10, emoji: '😱', label: 'No Way',        category: 'Shock',      aspect: 'tall',   isGif: true,  stashCount: 12800, trendingScore: 11230, isNew: false },
-  { id: 11, emoji: '🤣', label: 'Rolling',       category: 'Reactions',  aspect: 'wide',   isGif: true,  stashCount: 10500, trendingScore: 7920,  isNew: false },
-  { id: 12, emoji: '🚀', label: "Let's Go",      category: 'Hype',       aspect: 'tall',   isGif: false, stashCount: 7800,  trendingScore: 5600,  isNew: false },
-  { id: 13, emoji: '😅', label: 'Awkward...',    category: 'Awkward',    aspect: 'square', isGif: true,  stashCount: 2900,  trendingScore: 1840,  isNew: false },
-  { id: 14, emoji: '😤', label: 'Not It',        category: 'Savage',     aspect: 'wide',   isGif: false, stashCount: 1800,  trendingScore: 1050,  isNew: false },
-  { id: 15, emoji: '🫠', label: 'Melting',       category: 'Relatable',  aspect: 'tall',   isGif: true,  stashCount: 9100,  trendingScore: 6730,  isNew: false },
-  { id: 16, emoji: '🤯', label: 'Mind Blown',    category: 'Shock',      aspect: 'square', isGif: true,  stashCount: 13500, trendingScore: 10180, isNew: false },
-  { id: 17, emoji: '🫶', label: 'Big Love',      category: 'Wholesome',  aspect: 'tall',   isGif: false, stashCount: 5300,  trendingScore: 3640,  isNew: false },
-  { id: 18, emoji: '🙌', label: 'Agreed',        category: 'Agreement',  aspect: 'wide',   isGif: true,  stashCount: 8400,  trendingScore: 6390,  isNew: false },
-  { id: 19, emoji: '😵', label: 'Dizzy',         category: 'Confused',   aspect: 'square', isGif: true,  stashCount: 2200,  trendingScore: 1380,  isNew: false },
-  { id: 20, emoji: '🫡', label: 'Understood',    category: 'No Thanks',  aspect: 'tall',   isGif: false, stashCount: 1400,  trendingScore: 820,   isNew: false },
+  { id: 1,  emoji: '😂', label: 'Dead',          category: 'Reactions',  aspect: 'tall',   isGif: true,  stashCount: 14200, trendingScore: 10820, isNew: false, daysAgo: 60 },
+  { id: 2,  emoji: '🔥', label: 'Lit',           category: 'Hype',       aspect: 'square', isGif: false, stashCount: 8900,  trendingScore: 6480,  isNew: false, daysAgo: 58 },
+  { id: 3,  emoji: '😬', label: 'Yikes',         category: 'Awkward',    aspect: 'wide',   isGif: true,  stashCount: 5600,  trendingScore: 4150,  isNew: false, daysAgo: 55 },
+  { id: 4,  emoji: '💀', label: "I'm Dead",      category: 'Savage',     aspect: 'tall',   isGif: true,  stashCount: 11300, trendingScore: 8340,  isNew: false, daysAgo: 52 },
+  { id: 5,  emoji: '🤔', label: 'Confused',      category: 'Confused',   aspect: 'square', isGif: false, stashCount: 3400,  trendingScore: 2190,  isNew: false, daysAgo: 49 },
+  { id: 6,  emoji: '😭', label: 'Too Real',      category: 'Relatable',  aspect: 'tall',   isGif: true,  stashCount: 9800,  trendingScore: 7510,  isNew: false, daysAgo: 46 },
+  { id: 7,  emoji: '🥺', label: 'Please',        category: 'Wholesome',  aspect: 'square', isGif: false, stashCount: 7200,  trendingScore: 5290,  isNew: false, daysAgo: 43 },
+  { id: 8,  emoji: '🙅', label: 'Hard No',       category: 'No Thanks',  aspect: 'wide',   isGif: true,  stashCount: 4100,  trendingScore: 2870,  isNew: false, daysAgo: 40 },
+  { id: 9,  emoji: '💯', label: 'Facts',         category: 'Agreement',  aspect: 'square', isGif: false, stashCount: 6700,  trendingScore: 4960,  isNew: false, daysAgo: 36 },
+  { id: 10, emoji: '😱', label: 'No Way',        category: 'Shock',      aspect: 'tall',   isGif: true,  stashCount: 12800, trendingScore: 11230, isNew: false, daysAgo: 32 },
+  { id: 11, emoji: '🤣', label: 'Rolling',       category: 'Reactions',  aspect: 'wide',   isGif: true,  stashCount: 10500, trendingScore: 7920,  isNew: false, daysAgo: 28 },
+  { id: 12, emoji: '🚀', label: "Let's Go",      category: 'Hype',       aspect: 'tall',   isGif: false, stashCount: 7800,  trendingScore: 5600,  isNew: false, daysAgo: 24 },
+  { id: 13, emoji: '😅', label: 'Awkward...',    category: 'Awkward',    aspect: 'square', isGif: true,  stashCount: 2900,  trendingScore: 1840,  isNew: false, daysAgo: 21 },
+  { id: 14, emoji: '😤', label: 'Not It',        category: 'Savage',     aspect: 'wide',   isGif: false, stashCount: 1800,  trendingScore: 1050,  isNew: false, daysAgo: 18 },
+  { id: 15, emoji: '🫠', label: 'Melting',       category: 'Relatable',  aspect: 'tall',   isGif: true,  stashCount: 9100,  trendingScore: 6730,  isNew: false, daysAgo: 15 },
+  { id: 16, emoji: '🤯', label: 'Mind Blown',    category: 'Shock',      aspect: 'square', isGif: true,  stashCount: 13500, trendingScore: 10180, isNew: false, daysAgo: 12 },
+  { id: 17, emoji: '🫶', label: 'Big Love',      category: 'Wholesome',  aspect: 'tall',   isGif: false, stashCount: 5300,  trendingScore: 3640,  isNew: false, daysAgo: 10 },
+  { id: 18, emoji: '🙌', label: 'Agreed',        category: 'Agreement',  aspect: 'wide',   isGif: true,  stashCount: 8400,  trendingScore: 6390,  isNew: false, daysAgo: 8  },
+  { id: 19, emoji: '😵', label: 'Dizzy',         category: 'Confused',   aspect: 'square', isGif: true,  stashCount: 2200,  trendingScore: 1380,  isNew: false, daysAgo: 6  },
+  { id: 20, emoji: '🫡', label: 'Understood',    category: 'No Thanks',  aspect: 'tall',   isGif: false, stashCount: 1400,  trendingScore: 820,   isNew: false, daysAgo: 4  },
   // New items — discovery window
-  { id: 21, emoji: '🫨', label: 'Shaking',       category: 'Reactions',  aspect: 'square', isGif: true,  stashCount: 42,    trendingScore: 390,   isNew: true  },
-  { id: 22, emoji: '🥴', label: 'Woozy',         category: 'Relatable',  aspect: 'tall',   isGif: false, stashCount: 18,    trendingScore: 210,   isNew: true  },
-  { id: 23, emoji: '🚨', label: 'Red Alert',     category: 'Hype',       aspect: 'wide',   isGif: true,  stashCount: 7,     trendingScore: 520,   isNew: true  },
-  { id: 24, emoji: '😮‍💨', label: 'Phew',          category: 'Awkward',    aspect: 'square', isGif: false, stashCount: 31,    trendingScore: 175,   isNew: true  },
-  { id: 25, emoji: '🫥', label: 'Ghost Mode',    category: 'No Thanks',  aspect: 'tall',   isGif: true,  stashCount: 5,     trendingScore: 290,   isNew: true  },
+  { id: 21, emoji: '🫨', label: 'Shaking',       category: 'Reactions',  aspect: 'square', isGif: true,  stashCount: 42,    trendingScore: 390,   isNew: true,  daysAgo: 3  },
+  { id: 22, emoji: '🥴', label: 'Woozy',         category: 'Relatable',  aspect: 'tall',   isGif: false, stashCount: 18,    trendingScore: 210,   isNew: true,  daysAgo: 2  },
+  { id: 23, emoji: '🚨', label: 'Red Alert',     category: 'Hype',       aspect: 'wide',   isGif: true,  stashCount: 7,     trendingScore: 520,   isNew: true,  daysAgo: 1  },
+  { id: 24, emoji: '😮‍💨', label: 'Phew',          category: 'Awkward',    aspect: 'square', isGif: false, stashCount: 31,    trendingScore: 175,   isNew: true,  daysAgo: 1  },
+  { id: 25, emoji: '🫥', label: 'Ghost Mode',    category: 'No Thanks',  aspect: 'tall',   isGif: true,  stashCount: 5,     trendingScore: 290,   isNew: true,  daysAgo: 0  },
 ]
 
-// Top 12 by trendingScore for Trending page
-const TRENDING_DATA = [...MEME_DATA]
-  .sort((a, b) => b.trendingScore - a.trendingScore)
-  .slice(0, 12)
+// Feed: all items newest first
+const FEED_DATA = [...MEME_DATA].sort((a, b) => b.id - a.id)
 
 const FREE_LIMIT = 30
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
-function aspectHeight(aspect) {
-  if (aspect === 'tall')   return 200
-  if (aspect === 'wide')   return 110
-  return 150
-}
-
 function getBgColor(emoji) {
   const palette = ['#1a1a1a', '#1c1408', '#0d1a0d', '#1a0d0d', '#0d0d1a', '#1a1a0d', '#0d1a1a']
   const code = emoji.codePointAt(0) || 0
@@ -58,6 +50,14 @@ function getBgColor(emoji) {
 function formatCount(n) {
   if (n >= 1000) return `${(n / 1000).toFixed(1).replace(/\.0$/, '')}K`
   return `${n}`
+}
+
+function formatDaysAgo(days) {
+  if (days === 0) return 'New'
+  if (days === 1) return '1d ago'
+  if (days < 7)  return `${days}d ago`
+  if (days < 14) return '1w ago'
+  return `${Math.floor(days / 7)}w ago`
 }
 
 // ─── Components ──────────────────────────────────────────────────────────────
@@ -170,7 +170,96 @@ function ComingSoonModal({ visible, onClose }) {
   )
 }
 
-function MemeCard({ item, onStash, onCopy, isStashed, rank }) {
+function SettingsModal({ visible, onClose, onUpgradeClick }) {
+  const [notifs, setNotifs] = useState(true)
+  if (!visible) return null
+  return (
+    <div
+      style={{
+        position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.85)',
+        display: 'flex', alignItems: 'flex-end', justifyContent: 'center',
+        zIndex: 920, padding: '0 0 80px',
+      }}
+      onClick={onClose}
+    >
+      <div
+        style={{
+          background: '#141414', borderRadius: 20, padding: '24px', width: '100%',
+          maxWidth: 430, border: '1px solid #222', boxShadow: '0 -8px 40px rgba(0,0,0,0.6)',
+        }}
+        onClick={e => e.stopPropagation()}
+      >
+        <div style={{
+          fontFamily: 'Bebas Neue, sans-serif', fontSize: 16, color: '#ff3c00',
+          letterSpacing: 3, marginBottom: 16,
+        }}>SETTINGS</div>
+
+        <div style={{ background: '#1a1a1a', borderRadius: 12, border: '1px solid #222', overflow: 'hidden', marginBottom: 16 }}>
+          {/* Notifications */}
+          <div style={{
+            display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+            padding: '14px 16px', borderBottom: '1px solid #222',
+          }}>
+            <div>
+              <div style={{ fontFamily: 'Space Mono, monospace', fontSize: 12, color: '#ccc' }}>Notifications</div>
+              <div style={{ fontFamily: 'Space Mono, monospace', fontSize: 10, color: '#555' }}>Trending alerts &amp; updates</div>
+            </div>
+            <div
+              onClick={() => setNotifs(v => !v)}
+              style={{
+                width: 44, height: 26, borderRadius: 13,
+                background: notifs ? '#ff3c00' : '#333', position: 'relative',
+                cursor: 'pointer', transition: 'background 0.2s', flexShrink: 0,
+              }}
+            >
+              <div style={{
+                position: 'absolute', top: 3, left: notifs ? 21 : 3,
+                width: 20, height: 20, borderRadius: '50%', background: '#fff',
+                transition: 'left 0.2s',
+              }} />
+            </div>
+          </div>
+
+          {/* Dark mode — grayed out, always on */}
+          <div style={{
+            display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+            padding: '14px 16px', opacity: 0.4,
+          }}>
+            <div>
+              <div style={{ fontFamily: 'Space Mono, monospace', fontSize: 12, color: '#ccc' }}>Dark Mode</div>
+              <div style={{ fontFamily: 'Space Mono, monospace', fontSize: 10, color: '#555' }}>Always dark, baby</div>
+            </div>
+            <div style={{ width: 44, height: 26, borderRadius: 13, background: '#ff3c00', position: 'relative' }}>
+              <div style={{ position: 'absolute', top: 3, left: 21, width: 20, height: 20, borderRadius: '50%', background: '#fff' }} />
+            </div>
+          </div>
+        </div>
+
+        <button
+          onClick={onUpgradeClick}
+          style={{
+            width: '100%', padding: '14px',
+            background: 'linear-gradient(135deg, #cc2e00, #ff3c00)',
+            color: '#fff', border: 'none', borderRadius: 12,
+            fontFamily: 'Bebas Neue, sans-serif', fontSize: 18, letterSpacing: 2,
+            cursor: 'pointer', marginBottom: 10,
+          }}
+        >UPGRADE TO PREMIUM &#x26A1; — $2.99/month</button>
+
+        <button
+          onClick={onClose}
+          style={{
+            width: '100%', padding: '12px', background: 'transparent', color: '#555',
+            border: '1px solid #2a2a2a', borderRadius: 12, fontFamily: 'Space Mono, monospace',
+            fontSize: 11, cursor: 'pointer',
+          }}
+        >Close</button>
+      </div>
+    </div>
+  )
+}
+
+function MemeCard({ item, onStash, onCopy, isStashed, showTimestamp }) {
   return (
     <div
       style={{
@@ -199,14 +288,16 @@ function MemeCard({ item, onStash, onCopy, isStashed, rank }) {
         }}>GIF</div>
       )}
 
-      {/* Trend rank badge */}
-      {rank != null && (
+      {/* Timestamp badge — top right */}
+      {showTimestamp && (
         <div style={{
-          position: 'absolute', top: item.isGif ? 28 : 8, left: 8,
-          background: '#ff3c00', color: '#fff', fontSize: 9,
-          fontFamily: 'Bebas Neue, sans-serif', padding: '2px 6px',
-          borderRadius: 4, letterSpacing: 1,
-        }}>#{rank}</div>
+          position: 'absolute', top: 8, right: 8,
+          background: item.daysAgo === 0 ? '#ff3c00' : 'rgba(0,0,0,0.6)',
+          color: item.daysAgo === 0 ? '#fff' : '#aaa',
+          fontSize: 9, fontFamily: 'Space Mono, monospace',
+          padding: '2px 7px', borderRadius: 4, letterSpacing: 0.5,
+          border: item.daysAgo === 0 ? 'none' : '1px solid #333',
+        }}>{formatDaysAgo(item.daysAgo)}</div>
       )}
 
       {/* Persistent bottom strip — always visible, mobile-friendly */}
@@ -254,14 +345,14 @@ function MemeCard({ item, onStash, onCopy, isStashed, rank }) {
   )
 }
 
-function MemeGrid({ items, onStash, onCopy, stashedIds, rankMap }) {
+function MemeGrid({ items, onStash, onCopy, stashedIds, showTimestamp }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 12, padding: '0 12px 12px' }}>
       {items.map(item => (
         <MemeCard
           key={item.id} item={item} onStash={onStash} onCopy={onCopy}
           isStashed={stashedIds.has(item.id)}
-          rank={rankMap ? rankMap[item.id] : undefined}
+          showTimestamp={showTimestamp}
         />
       ))}
     </div>
@@ -336,6 +427,22 @@ function SortChips({ selected, onSelect }) {
 
 // ─── Pages ───────────────────────────────────────────────────────────────────
 
+function FeedPage({ onStash, onCopy, stashedIds }) {
+  return (
+    <div style={{ flex: 1, overflowY: 'auto' }}>
+      <div style={{ padding: '12px 12px 4px' }}>
+        <div style={{
+          fontFamily: 'Space Mono, monospace', fontSize: 10, color: '#555', letterSpacing: 1,
+        }}>Recently added reactions, newest first</div>
+      </div>
+      <MemeGrid
+        items={FEED_DATA} onStash={onStash} onCopy={onCopy}
+        stashedIds={stashedIds} showTimestamp
+      />
+    </div>
+  )
+}
+
 function LibraryPage({ onStash, onCopy, stashedIds }) {
   const [category, setCategory] = useState('All')
   const [search, setSearch] = useState('')
@@ -359,7 +466,6 @@ function LibraryPage({ onStash, onCopy, stashedIds }) {
     if (sort === 'trending') {
       rest.sort((a, b) => b.trendingScore - a.trendingScore)
     } else {
-      // most-stashed
       rest.sort((a, b) => b.stashCount - a.stashCount)
     }
 
@@ -417,33 +523,8 @@ function LibraryPage({ onStash, onCopy, stashedIds }) {
   )
 }
 
-function TrendingPage({ onStash, onCopy, stashedIds }) {
-  const rankMap = useMemo(() => {
-    const map = {}
-    TRENDING_DATA.forEach((item, i) => { map[item.id] = i + 1 })
-    return map
-  }, [])
-
-  return (
-    <div style={{ flex: 1, overflowY: 'auto' }}>
-      <div style={{ padding: '16px 12px 12px' }}>
-        <div style={{
-          fontFamily: 'Bebas Neue, sans-serif', fontSize: 13, color: '#ff3c00',
-          letterSpacing: 3, marginBottom: 4,
-        }}>TRENDING THIS WEEK</div>
-        <div style={{
-          fontFamily: 'Space Mono, monospace', fontSize: 10, color: '#555',
-        }}>Top reactions everyone&apos;s using right now</div>
-      </div>
-      <MemeGrid
-        items={TRENDING_DATA} onStash={onStash} onCopy={onCopy}
-        stashedIds={stashedIds} rankMap={rankMap}
-      />
-    </div>
-  )
-}
-
-function StashPage({ stashedItems, stashCount, onStash, onCopy, stashedIds }) {
+function ProfilePage({ stashedItems, stashCount, stashedIds, onStash, onCopy, onUpgradeClick }) {
+  const [settingsOpen, setSettingsOpen] = useState(false)
   const gifCount = stashedItems.filter(m => m.isGif).length
   const picCount = stashedItems.filter(m => !m.isGif).length
   const progress = Math.min(stashCount / FREE_LIMIT, 1)
@@ -451,12 +532,70 @@ function StashPage({ stashedItems, stashCount, onStash, onCopy, stashedIds }) {
 
   return (
     <div style={{ flex: 1, overflowY: 'auto' }}>
-      <div style={{ padding: '16px 12px 0' }}>
+      {/* Banner + avatar */}
+      <div style={{
+        height: 120, background: 'linear-gradient(135deg, #1a0800, #ff3c00 200%)',
+        position: 'relative', marginBottom: 40,
+      }}>
+        {/* Gear icon — top right */}
+        <button
+          onClick={() => setSettingsOpen(true)}
+          style={{
+            position: 'absolute', top: 12, right: 14,
+            background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.15)',
+            borderRadius: '50%', width: 34, height: 34,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            cursor: 'pointer', color: '#fff', fontSize: 16,
+          }}
+          title="Settings"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+          </svg>
+        </button>
+
         <div style={{
-          background: '#141414', borderRadius: 16, padding: '16px',
-          border: '1px solid #222', marginBottom: 16,
+          position: 'absolute', bottom: -30, left: '50%', transform: 'translateX(-50%)',
+          width: 64, height: 64, borderRadius: '50%',
+          background: '#1a1a1a', border: '3px solid #ff3c00',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          fontFamily: 'Bebas Neue, sans-serif', fontSize: 24, color: '#ff3c00',
+        }}>WB</div>
+      </div>
+
+      {/* Username */}
+      <div style={{ textAlign: 'center', padding: '0 24px 24px' }}>
+        <div style={{
+          fontFamily: 'Bebas Neue, sans-serif', fontSize: 22, color: '#fff', letterSpacing: 2,
+        }}>wallybot</div>
+        <div style={{
+          fontFamily: 'Space Mono, monospace', fontSize: 11, color: '#555',
+        }}>Free tier &middot; Member since 2024</div>
+      </div>
+
+      {/* MY STASH section */}
+      <div style={{ padding: '0 12px 8px' }}>
+        <div style={{
+          display: 'flex', justifyContent: 'space-between', alignItems: 'baseline',
+          marginBottom: 10,
         }}>
-          <div style={{ display: 'flex', justifyContent: 'space-around', marginBottom: 16 }}>
+          <div style={{
+            fontFamily: 'Bebas Neue, sans-serif', fontSize: 13, color: '#ff3c00',
+            letterSpacing: 3,
+          }}>MY STASH</div>
+          <div style={{
+            fontFamily: 'Space Mono, monospace', fontSize: 10,
+            color: nearLimit ? '#ff3c00' : '#555',
+          }}>{stashCount} / {FREE_LIMIT} saved {nearLimit ? '⚠' : ''}</div>
+        </div>
+
+        {/* Stash stats + progress */}
+        <div style={{
+          background: '#141414', borderRadius: 16, padding: '14px 16px',
+          border: '1px solid #222', marginBottom: 12,
+        }}>
+          <div style={{ display: 'flex', justifyContent: 'space-around', marginBottom: 12 }}>
             {[
               { label: 'SAVED', value: stashCount },
               { label: 'GIFs', value: gifCount },
@@ -464,7 +603,7 @@ function StashPage({ stashedItems, stashCount, onStash, onCopy, stashedIds }) {
             ].map(stat => (
               <div key={stat.label} style={{ textAlign: 'center' }}>
                 <div style={{
-                  fontFamily: 'Bebas Neue, sans-serif', fontSize: 36, color: '#ff3c00', lineHeight: 1,
+                  fontFamily: 'Bebas Neue, sans-serif', fontSize: 30, color: '#ff3c00', lineHeight: 1,
                 }}>{stat.value}</div>
                 <div style={{
                   fontFamily: 'Space Mono, monospace', fontSize: 10, color: '#555', letterSpacing: 1,
@@ -472,23 +611,12 @@ function StashPage({ stashedItems, stashCount, onStash, onCopy, stashedIds }) {
               </div>
             ))}
           </div>
-
-          <div style={{ marginBottom: 6 }}>
+          <div style={{ height: 4, background: '#2a2a2a', borderRadius: 2, overflow: 'hidden' }}>
             <div style={{
-              display: 'flex', justifyContent: 'space-between',
-              fontFamily: 'Space Mono, monospace', fontSize: 10,
-              color: nearLimit ? '#ff3c00' : '#555', marginBottom: 6,
-            }}>
-              <span>{stashCount} / {FREE_LIMIT} saved</span>
-              <span>{nearLimit ? '\u26a0 Almost full' : 'Free tier'}</span>
-            </div>
-            <div style={{ height: 4, background: '#2a2a2a', borderRadius: 2, overflow: 'hidden' }}>
-              <div style={{
-                height: '100%', width: `${progress * 100}%`,
-                background: nearLimit ? '#ff3c00' : '#555',
-                borderRadius: 2, transition: 'width 0.3s ease',
-              }} />
-            </div>
+              height: '100%', width: `${progress * 100}%`,
+              background: nearLimit ? '#ff3c00' : '#555',
+              borderRadius: 2, transition: 'width 0.3s ease',
+            }} />
           </div>
         </div>
       </div>
@@ -504,164 +632,62 @@ function StashPage({ stashedItems, stashCount, onStash, onCopy, stashedIds }) {
           }}>Your stash is empty</div>
           <div style={{
             fontFamily: 'Space Mono, monospace', fontSize: 11, color: '#555', textAlign: 'center',
-          }}>Start stashing reactions from Library or Trending</div>
+          }}>Stash reactions from Feed or Library</div>
         </div>
       ) : (
         <MemeGrid items={stashedItems} onStash={onStash} onCopy={onCopy} stashedIds={stashedIds} />
       )}
-    </div>
-  )
-}
 
-function AccountPage({ stashCount, onUpgradeClick }) {
-  const [notifs, setNotifs] = useState(true)
-  const gifCount = Math.floor(stashCount * 0.6)
-  const picCount = stashCount - gifCount
-
-  return (
-    <div style={{ flex: 1, overflowY: 'auto' }}>
-      {/* Banner */}
-      <div style={{
-        height: 120, background: 'linear-gradient(135deg, #1a0800, #ff3c00 200%)',
-        position: 'relative', marginBottom: 40,
-      }}>
-        <div style={{
-          position: 'absolute', bottom: -30, left: '50%', transform: 'translateX(-50%)',
-          width: 64, height: 64, borderRadius: '50%',
-          background: '#1a1a1a', border: '3px solid #ff3c00',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          fontFamily: 'Bebas Neue, sans-serif', fontSize: 24, color: '#ff3c00',
-        }}>WB</div>
-      </div>
-
-      <div style={{ textAlign: 'center', padding: '0 24px 24px' }}>
-        <div style={{
-          fontFamily: 'Bebas Neue, sans-serif', fontSize: 22, color: '#fff', letterSpacing: 2,
-        }}>wallybot</div>
-        <div style={{
-          fontFamily: 'Space Mono, monospace', fontSize: 11, color: '#555',
-        }}>Free tier &middot; Member since 2024</div>
-      </div>
-
-      {/* Stash stats */}
-      <div style={{ padding: '0 12px 16px' }}>
-        <div style={{
-          background: '#141414', borderRadius: 16, padding: 16, border: '1px solid #222',
-        }}>
-          <div style={{
-            fontFamily: 'Bebas Neue, sans-serif', fontSize: 12, color: '#555',
-            letterSpacing: 2, marginBottom: 12,
-          }}>STASH STATS</div>
-          <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-            {[
-              { label: 'SAVED', value: stashCount },
-              { label: 'GIFs', value: gifCount },
-              { label: 'PICS', value: picCount },
-            ].map(stat => (
-              <div key={stat.label} style={{ textAlign: 'center' }}>
-                <div style={{
-                  fontFamily: 'Bebas Neue, sans-serif', fontSize: 30, color: '#ff3c00', lineHeight: 1,
-                }}>{stat.value}</div>
-                <div style={{
-                  fontFamily: 'Space Mono, monospace', fontSize: 10, color: '#555',
-                }}>{stat.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Upgrade CTA */}
-      <div style={{ padding: '0 12px 16px' }}>
-        <button
-          onClick={onUpgradeClick}
-          style={{
-            width: '100%', padding: '16px',
-            background: 'linear-gradient(135deg, #cc2e00, #ff3c00)',
-            color: '#fff', border: 'none', borderRadius: 16,
-            fontFamily: 'Bebas Neue, sans-serif', fontSize: 20, letterSpacing: 3,
-            cursor: 'pointer', boxShadow: '0 4px 20px rgba(255,60,0,0.3)',
-          }}
-        >
-          UPGRADE TO PREMIUM &#x26A1;
-        </button>
-        <div style={{
-          fontFamily: 'Space Mono, monospace', fontSize: 10, color: '#555',
-          textAlign: 'center', marginTop: 8,
-        }}>Unlimited stash &middot; $2.99/month</div>
-      </div>
-
-      {/* Settings */}
-      <div style={{ padding: '0 12px 32px' }}>
-        <div style={{
-          fontFamily: 'Bebas Neue, sans-serif', fontSize: 12, color: '#555',
-          letterSpacing: 2, padding: '0 4px 8px',
-        }}>SETTINGS</div>
-        <div style={{ background: '#141414', borderRadius: 16, border: '1px solid #222', overflow: 'hidden' }}>
-          {/* Notifications */}
-          <div style={{
-            display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-            padding: '16px', borderBottom: '1px solid #1e1e1e',
-          }}>
-            <div>
-              <div style={{ fontFamily: 'Space Mono, monospace', fontSize: 12, color: '#ccc' }}>Notifications</div>
-              <div style={{ fontFamily: 'Space Mono, monospace', fontSize: 10, color: '#555' }}>Trending alerts &amp; updates</div>
-            </div>
-            <div
-              onClick={() => setNotifs(!notifs)}
-              style={{
-                width: 44, height: 26, borderRadius: 13,
-                background: notifs ? '#ff3c00' : '#333', position: 'relative',
-                cursor: 'pointer', transition: 'background 0.2s', flexShrink: 0,
-              }}
-            >
-              <div style={{
-                position: 'absolute', top: 3, left: notifs ? 21 : 3,
-                width: 20, height: 20, borderRadius: '50%', background: '#fff',
-                transition: 'left 0.2s',
-              }} />
-            </div>
-          </div>
-
-          {/* Dark mode — grayed out, always on */}
-          <div style={{
-            display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-            padding: '16px', borderBottom: '1px solid #1e1e1e', opacity: 0.4,
-          }}>
-            <div>
-              <div style={{ fontFamily: 'Space Mono, monospace', fontSize: 12, color: '#ccc' }}>Dark Mode</div>
-              <div style={{ fontFamily: 'Space Mono, monospace', fontSize: 10, color: '#555' }}>Always dark, baby</div>
-            </div>
-            <div style={{
-              width: 44, height: 26, borderRadius: 13, background: '#ff3c00', position: 'relative',
-            }}>
-              <div style={{
-                position: 'absolute', top: 3, left: 21, width: 20, height: 20,
-                borderRadius: '50%', background: '#fff',
-              }} />
-            </div>
-          </div>
-
-          {/* Version */}
-          <div style={{
-            display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-            padding: '16px',
-          }}>
-            <div style={{ fontFamily: 'Space Mono, monospace', fontSize: 12, color: '#555' }}>Version</div>
-            <div style={{ fontFamily: 'Space Mono, monospace', fontSize: 11, color: '#444' }}>3.0.0</div>
-          </div>
-        </div>
-      </div>
+      <SettingsModal
+        visible={settingsOpen}
+        onClose={() => setSettingsOpen(false)}
+        onUpgradeClick={() => { setSettingsOpen(false); onUpgradeClick() }}
+      />
     </div>
   )
 }
 
 // ─── Bottom Nav ───────────────────────────────────────────────────────────────
+
+// SVG icons rendered inline for crispness
+function IconFeed({ active }) {
+  const c = active ? '#ff3c00' : '#555'
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="3" width="7" height="7" rx="1"/>
+      <rect x="14" y="3" width="7" height="7" rx="1"/>
+      <rect x="3" y="14" width="7" height="7" rx="1"/>
+      <rect x="14" y="14" width="7" height="7" rx="1"/>
+    </svg>
+  )
+}
+
+function IconLibrary({ active }) {
+  const c = active ? '#ff3c00' : '#555'
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="3" width="18" height="18" rx="2"/>
+      <line x1="3" y1="9" x2="21" y2="9"/>
+      <line x1="3" y1="15" x2="21" y2="15"/>
+      <line x1="9" y1="3" x2="9" y2="21"/>
+    </svg>
+  )
+}
+
+function IconProfile({ active }) {
+  const c = active ? '#ff3c00' : '#555'
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="8" r="4"/>
+      <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+    </svg>
+  )
+}
+
 const NAV_TABS = [
-  { id: 'library',  label: 'Library',  icon: '🗂' },
-  { id: 'trending', label: 'Trending', icon: '🔥' },
-  { id: 'stash',    label: 'Stash',    icon: '📦' },
-  { id: 'account',  label: 'Account',  icon: '👤' },
+  { id: 'feed',    label: 'Feed' },
+  { id: 'library', label: 'Library' },
+  { id: 'profile', label: 'Profile' },
 ]
 
 function BottomNav({ active, onChange }) {
@@ -682,10 +708,13 @@ function BottomNav({ active, onChange }) {
             transition: 'color 0.15s',
           }}
         >
-          <span style={{ fontSize: 18 }}>{tab.icon}</span>
+          {tab.id === 'feed'    && <IconFeed    active={active === tab.id} />}
+          {tab.id === 'library' && <IconLibrary active={active === tab.id} />}
+          {tab.id === 'profile' && <IconProfile active={active === tab.id} />}
           <span style={{
             fontFamily: 'Space Mono, monospace', fontSize: 9,
             letterSpacing: 0.5, textTransform: 'uppercase',
+            color: active === tab.id ? '#ff3c00' : '#555',
           }}>{tab.label}</span>
         </button>
       ))}
@@ -695,7 +724,7 @@ function BottomNav({ active, onChange }) {
 
 // ─── App Shell ────────────────────────────────────────────────────────────────
 export default function App() {
-  const [activeTab, setActiveTab] = useState('library')
+  const [activeTab, setActiveTab] = useState('feed')
   const [stashedIds, setStashedIds] = useState(new Set())
   const [toast, setToast] = useState({ visible: false, message: '' })
   const [upgradeModal, setUpgradeModal] = useState(false)
@@ -744,6 +773,12 @@ export default function App() {
     setComingSoon(true)
   }, [])
 
+  const headerLabel = {
+    feed:    'FRESH',
+    library: 'BROWSE',
+    profile: 'PROFILE',
+  }[activeTab]
+
   return (
     <>
       <style>{`
@@ -774,24 +809,25 @@ export default function App() {
           <div style={{
             fontFamily: 'Space Mono, monospace', fontSize: 10, color: '#444', letterSpacing: 1,
           }}>
-            {activeTab === 'library'  && 'BROWSE'}
-            {activeTab === 'trending' && 'THIS WEEK'}
-            {activeTab === 'stash'    && 'MY STASH'}
-            {activeTab === 'account'  && 'ACCOUNT'}
+            {headerLabel}
           </div>
         </div>
 
         {/* Page content */}
         <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
-          {activeTab === 'library'  && <LibraryPage  onStash={handleStash} onCopy={handleCopy} stashedIds={stashedIds} />}
-          {activeTab === 'trending' && <TrendingPage onStash={handleStash} onCopy={handleCopy} stashedIds={stashedIds} />}
-          {activeTab === 'stash'    && (
-            <StashPage
+          {activeTab === 'feed' && (
+            <FeedPage onStash={handleStash} onCopy={handleCopy} stashedIds={stashedIds} />
+          )}
+          {activeTab === 'library' && (
+            <LibraryPage onStash={handleStash} onCopy={handleCopy} stashedIds={stashedIds} />
+          )}
+          {activeTab === 'profile' && (
+            <ProfilePage
               stashedItems={stashedItems} stashCount={stashCount}
-              onStash={handleStash} onCopy={handleCopy} stashedIds={stashedIds}
+              stashedIds={stashedIds} onStash={handleStash} onCopy={handleCopy}
+              onUpgradeClick={handleUpgradeClick}
             />
           )}
-          {activeTab === 'account'  && <AccountPage stashCount={stashCount} onUpgradeClick={handleUpgradeClick} />}
         </div>
 
         {/* Bottom Nav */}
