@@ -171,13 +171,11 @@ function ComingSoonModal({ visible, onClose }) {
 }
 
 function MemeCard({ item, onStash, onCopy, isStashed, rank }) {
-  const h = aspectHeight(item.aspect)
-
   return (
     <div
       style={{
-        position: 'relative', borderRadius: 12, overflow: 'hidden',
-        height: h, background: getBgColor(item.emoji),
+        position: 'relative', borderRadius: 8, overflow: 'hidden',
+        aspectRatio: '4 / 3', background: getBgColor(item.emoji),
         display: 'flex', flexDirection: 'column',
         alignItems: 'center', justifyContent: 'center',
         userSelect: 'none',
@@ -185,11 +183,11 @@ function MemeCard({ item, onStash, onCopy, isStashed, rank }) {
         transition: 'border 0.2s',
       }}
     >
-      <div style={{ fontSize: h > 160 ? 56 : 44, lineHeight: 1 }}>{item.emoji}</div>
+      <div style={{ fontSize: 64, lineHeight: 1 }}>{item.emoji}</div>
       <div style={{
         fontFamily: 'Space Mono, monospace', fontSize: 10, color: '#666',
         marginTop: 8, letterSpacing: 1, textTransform: 'uppercase',
-        paddingBottom: 36,
+        paddingBottom: 44,
       }}>{item.label}</div>
 
       {/* GIF badge */}
@@ -214,14 +212,13 @@ function MemeCard({ item, onStash, onCopy, isStashed, rank }) {
       {/* Persistent bottom strip — always visible, mobile-friendly */}
       <div style={{
         position: 'absolute', bottom: 0, left: 0, right: 0,
-        height: 36, background: 'rgba(0,0,0,0.75)',
+        height: 44, background: 'rgba(0,0,0,0.75)',
         backdropFilter: 'blur(4px)', WebkitBackdropFilter: 'blur(4px)',
-        display: 'flex', alignItems: 'center', padding: '0 6px', gap: 4,
+        display: 'flex', alignItems: 'center', padding: '0 8px', gap: 6,
       }}>
         <div style={{
           fontFamily: 'Space Mono, monospace', fontSize: 9, color: '#999',
-          overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
-          maxWidth: 44, flexShrink: 1,
+          flexShrink: 1, minWidth: 0,
         }}>{item.label}</div>
         <div style={{
           fontFamily: 'Space Mono, monospace', fontSize: 9, color: '#666',
@@ -231,10 +228,10 @@ function MemeCard({ item, onStash, onCopy, isStashed, rank }) {
         <button
           onClick={e => { e.stopPropagation(); onStash(item) }}
           style={{
-            height: 26, minWidth: 60, padding: '0 8px',
+            height: 28, minWidth: 60, padding: '0 8px',
             background: isStashed ? '#333' : '#ff3c00',
-            color: '#fff', border: 'none', borderRadius: 13,
-            fontFamily: 'Bebas Neue, sans-serif', fontSize: 9, letterSpacing: 1,
+            color: '#fff', border: 'none', borderRadius: 14,
+            fontFamily: 'Bebas Neue, sans-serif', fontSize: 8, letterSpacing: 1,
             cursor: 'pointer', flexShrink: 0,
           }}
         >
@@ -243,10 +240,10 @@ function MemeCard({ item, onStash, onCopy, isStashed, rank }) {
         <button
           onClick={e => { e.stopPropagation(); onCopy(item) }}
           style={{
-            height: 26, minWidth: 60, padding: '0 8px',
+            height: 28, minWidth: 60, padding: '0 8px',
             background: '#1a1a1a', color: '#ccc',
-            border: '1px solid rgba(255,255,255,0.15)', borderRadius: 13,
-            fontFamily: 'Bebas Neue, sans-serif', fontSize: 9, letterSpacing: 1,
+            border: '1px solid rgba(255,255,255,0.15)', borderRadius: 14,
+            fontFamily: 'Bebas Neue, sans-serif', fontSize: 8, letterSpacing: 1,
             cursor: 'pointer', flexShrink: 0,
           }}
         >
@@ -258,29 +255,15 @@ function MemeCard({ item, onStash, onCopy, isStashed, rank }) {
 }
 
 function MemeGrid({ items, onStash, onCopy, stashedIds, rankMap }) {
-  const col1 = items.filter((_, i) => i % 2 === 0)
-  const col2 = items.filter((_, i) => i % 2 === 1)
-
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, padding: '0 12px 12px' }}>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-        {col1.map(item => (
-          <MemeCard
-            key={item.id} item={item} onStash={onStash} onCopy={onCopy}
-            isStashed={stashedIds.has(item.id)}
-            rank={rankMap ? rankMap[item.id] : undefined}
-          />
-        ))}
-      </div>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-        {col2.map(item => (
-          <MemeCard
-            key={item.id} item={item} onStash={onStash} onCopy={onCopy}
-            isStashed={stashedIds.has(item.id)}
-            rank={rankMap ? rankMap[item.id] : undefined}
-          />
-        ))}
-      </div>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 12, padding: '0 12px 12px' }}>
+      {items.map(item => (
+        <MemeCard
+          key={item.id} item={item} onStash={onStash} onCopy={onCopy}
+          isStashed={stashedIds.has(item.id)}
+          rank={rankMap ? rankMap[item.id] : undefined}
+        />
+      ))}
     </div>
   )
 }
