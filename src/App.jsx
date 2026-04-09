@@ -425,6 +425,224 @@ function SortChips({ selected, onSelect }) {
   )
 }
 
+// ─── Stash Gallery & Viewer ──────────────────────────────────────────────────
+
+function StashViewer({ items, startIndex, onClose, onRemove, onCopy }) {
+  const [idx, setIdx] = useState(startIndex)
+
+  // When items shrink (after removal), clamp idx or close
+  const prevLen = items.length
+  if (items.length === 0) { onClose(); return null }
+  const safeIdx = Math.min(idx, items.length - 1)
+  const item = items[safeIdx]
+  const total = items.length
+
+  const prev = () => setIdx(i => (i - 1 + total) % total)
+  const next = () => setIdx(i => (i + 1) % total)
+
+  const handleRemove = () => {
+    const nextIdx = safeIdx >= total - 1 ? Math.max(0, total - 2) : safeIdx
+    onRemove(item)
+    setIdx(nextIdx)
+  }
+
+  return (
+    <div style={{
+      position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.95)',
+      zIndex: 500, display: 'flex', flexDirection: 'column',
+    }}>
+      {/* Top bar: position + close */}
+      <div style={{
+        display: 'flex', justifyContent: 'center', alignItems: 'center',
+        padding: '16px', position: 'relative', flexShrink: 0,
+      }}>
+        <div style={{
+          fontFamily: 'Space Mono, monospace', fontSize: 11, color: '#666',
+        }}>{safeIdx + 1} / {total}</div>
+        <button
+          onClick={onClose}
+          style={{
+            position: 'absolute', right: 16,
+            background: 'rgba(255,255,255,0.1)', border: '1px solid #333',
+            borderRadius: '50%', width: 34, height: 34,
+            color: '#fff', fontSize: 18, cursor: 'pointer',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            fontFamily: 'sans-serif',
+          }}
+        >✕</button>
+      </div>
+
+      {/* Center: emoji + left/right arrows */}
+      <div style={{
+        flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center',
+        position: 'relative',
+      }}>
+        {total > 1 && (
+          <button
+            onClick={prev}
+            style={{
+              position: 'absolute', left: 16,
+              background: 'rgba(255,255,255,0.08)', border: '1px solid #333',
+              borderRadius: '50%', width: 44, height: 44,
+              color: '#ccc', fontSize: 20, cursor: 'pointer',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+            }}
+          >←</button>
+        )}
+
+        <div style={{ fontSize: 120, lineHeight: 1, userSelect: 'none' }}>{item.emoji}</div>
+
+        {total > 1 && (
+          <button
+            onClick={next}
+            style={{
+              position: 'absolute', right: 16,
+              background: 'rgba(255,255,255,0.08)', border: '1px solid #333',
+              borderRadius: '50%', width: 44, height: 44,
+              color: '#ccc', fontSize: 20, cursor: 'pointer',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+            }}
+          >→</button>
+        )}
+      </div>
+
+      {/* Bottom strip */}
+      <div style={{
+        background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(4px)', WebkitBackdropFilter: 'blur(4px)',
+        padding: '14px 12px', display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0,
+        paddingBottom: 'calc(14px + env(safe-area-inset-bottom, 0px))',
+      }}>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{
+            fontFamily: 'Space Mono, monospace', fontSize: 12, color: '#ccc',
+            whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
+          }}>{item.label}</div>
+          <div style={{
+            fontFamily: 'Space Mono, monospace', fontSize: 10, color: '#666',
+          }}>{formatCount(item.stashCount)} stashed</div>
+        </div>
+        <button
+          onClick={handleRemove}
+          style={{
+            padding: '9px 12px', background: '#ff3c00', color: '#fff',
+            border: 'none', borderRadius: 20, fontFamily: 'Bebas Neue, sans-serif',
+            fontSize: 12, letterSpacing: 1, cursor: 'pointer', flexShrink: 0, whiteSpace: 'nowrap',
+          }}
+        >REMOVE FROM STASH</button>
+        <button
+          onClick={() => onCopy(item)}
+          style={{
+            padding: '9px 12px', background: '#1a1a1a', color: '#ccc',
+            border: '1px solid rgba(255,255,255,0.15)', borderRadius: 20,
+            fontFamily: 'Bebas Neue, sans-serif', fontSize: 12, letterSpacing: 1,
+            cursor: 'pointer', flexShrink: 0,
+          }}
+        >COPY</button>
+      </div>
+    </div>
+  )
+}
+
+function StashGallery({ stashedItems, onRemove, onCopy }) {
+  const [search, setSearch] = useState('')
+  const [category, setCategory] = useState('All')
+  const [viewerIndex, setViewerIndex] = useState(null)
+
+  const filtered = useMemo(() => stashedItems.filter(item => {
+    const matchCat = category === 'All' || item.category === category
+    const matchSearch = item.label.toLowerCase().includes(search.toLowerCase())
+    return matchCat && matchSearch
+  }), [stashedItems, search, category])
+
+  // Close viewer if filtered list becomes empty while viewer is open
+  const viewerOpen = viewerIndex !== null && filtered.length > 0
+
+  if (stashedItems.length === 0) {
+    return (
+      <div style={{
+        display: 'flex', flexDirection: 'column', alignItems: 'center',
+        justifyContent: 'center', padding: 60, gap: 12,
+      }}>
+        <div style={{ fontSize: 48 }}>📭</div>
+        <div style={{
+          fontFamily: 'Bebas Neue, sans-serif', fontSize: 24, color: '#444', letterSpacing: 2,
+        }}>Your stash is empty</div>
+        <div style={{
+          fontFamily: 'Space Mono, monospace', fontSize: 11, color: '#555', textAlign: 'center',
+        }}>Stash reactions from Feed or Library</div>
+      </div>
+    )
+  }
+
+  return (
+    <>
+      {/* Search bar */}
+      <div style={{ padding: '8px 12px' }}>
+        <input
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          placeholder="search your stash..."
+          style={{
+            width: '100%', padding: '10px 16px', background: '#1a1a1a',
+            border: '1px solid #2a2a2a', borderRadius: 24, color: '#fff',
+            fontFamily: 'Space Mono, monospace', fontSize: 12, outline: 'none',
+            boxSizing: 'border-box',
+          }}
+        />
+      </div>
+
+      {/* Category chips */}
+      <CategoryChips selected={category} onSelect={setCategory} />
+
+      {/* Grid or empty */}
+      {filtered.length === 0 ? (
+        <div style={{
+          display: 'flex', flexDirection: 'column', alignItems: 'center',
+          padding: 40, gap: 12,
+        }}>
+          <div style={{ fontSize: 32 }}>🔍</div>
+          <div style={{
+            fontFamily: 'Space Mono, monospace', fontSize: 12, color: '#555', textAlign: 'center',
+          }}>No stashed items match</div>
+        </div>
+      ) : (
+        <div style={{
+          display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 2,
+          paddingBottom: 12,
+        }}>
+          {filtered.map((item, i) => (
+            <div
+              key={item.id}
+              onClick={() => setViewerIndex(i)}
+              style={{
+                aspectRatio: '1 / 1', background: getBgColor(item.emoji),
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                cursor: 'pointer', fontSize: 40, userSelect: 'none',
+              }}
+            >
+              {item.emoji}
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Viewer modal */}
+      {viewerOpen && (
+        <StashViewer
+          items={filtered}
+          startIndex={viewerIndex}
+          onClose={() => setViewerIndex(null)}
+          onRemove={(item) => {
+            onRemove(item)
+            // idx clamping handled inside StashViewer
+          }}
+          onCopy={onCopy}
+        />
+      )}
+    </>
+  )
+}
+
 // ─── Pages ───────────────────────────────────────────────────────────────────
 
 function SubmitModal({ visible, onClose, onSubmit }) {
@@ -731,22 +949,7 @@ function ProfilePage({ stashedItems, stashCount, stashedIds, onStash, onCopy, on
         </div>
       </div>
 
-      {stashedItems.length === 0 ? (
-        <div style={{
-          display: 'flex', flexDirection: 'column', alignItems: 'center',
-          justifyContent: 'center', padding: 60, gap: 12,
-        }}>
-          <div style={{ fontSize: 48 }}>📭</div>
-          <div style={{
-            fontFamily: 'Bebas Neue, sans-serif', fontSize: 24, color: '#444', letterSpacing: 2,
-          }}>Your stash is empty</div>
-          <div style={{
-            fontFamily: 'Space Mono, monospace', fontSize: 11, color: '#555', textAlign: 'center',
-          }}>Stash reactions from Feed or Library</div>
-        </div>
-      ) : (
-        <MemeGrid items={stashedItems} onStash={onStash} onCopy={onCopy} stashedIds={stashedIds} />
-      )}
+      <StashGallery stashedItems={stashedItems} onRemove={onStash} onCopy={onCopy} />
 
       <SettingsModal
         visible={settingsOpen}
