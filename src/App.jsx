@@ -171,21 +171,16 @@ function ComingSoonModal({ visible, onClose }) {
 }
 
 function MemeCard({ item, onStash, onCopy, isStashed, rank }) {
-  const [hovered, setHovered] = useState(false)
   const h = aspectHeight(item.aspect)
 
   return (
     <div
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      onTouchStart={() => setHovered(true)}
-      onTouchEnd={() => setTimeout(() => setHovered(false), 1200)}
       style={{
         position: 'relative', borderRadius: 12, overflow: 'hidden',
         height: h, background: getBgColor(item.emoji),
         display: 'flex', flexDirection: 'column',
         alignItems: 'center', justifyContent: 'center',
-        cursor: 'pointer', userSelect: 'none',
+        userSelect: 'none',
         border: isStashed ? '1px solid rgba(255,60,0,0.4)' : '1px solid transparent',
         transition: 'border 0.2s',
       }}
@@ -194,6 +189,7 @@ function MemeCard({ item, onStash, onCopy, isStashed, rank }) {
       <div style={{
         fontFamily: 'Space Mono, monospace', fontSize: 10, color: '#666',
         marginTop: 8, letterSpacing: 1, textTransform: 'uppercase',
+        paddingBottom: 36,
       }}>{item.label}</div>
 
       {/* GIF badge */}
@@ -215,45 +211,47 @@ function MemeCard({ item, onStash, onCopy, isStashed, rank }) {
         }}>#{rank}</div>
       )}
 
-      {isStashed && (
-        <div style={{ position: 'absolute', top: 8, right: 8, fontSize: 14 }}>📌</div>
-      )}
-
-      {/* Hover overlay */}
+      {/* Persistent bottom strip — always visible, mobile-friendly */}
       <div style={{
-        position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.75)',
-        display: 'flex', flexDirection: 'column', alignItems: 'center',
-        justifyContent: 'center', gap: 8,
-        opacity: hovered ? 1 : 0, transition: 'opacity 0.2s',
+        position: 'absolute', bottom: 0, left: 0, right: 0,
+        height: 36, background: 'rgba(0,0,0,0.75)',
+        backdropFilter: 'blur(4px)', WebkitBackdropFilter: 'blur(4px)',
+        display: 'flex', alignItems: 'center', padding: '0 6px', gap: 4,
       }}>
+        <div style={{
+          fontFamily: 'Space Mono, monospace', fontSize: 9, color: '#999',
+          overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
+          maxWidth: 44, flexShrink: 1,
+        }}>{item.label}</div>
+        <div style={{
+          fontFamily: 'Space Mono, monospace', fontSize: 9, color: '#666',
+          whiteSpace: 'nowrap', flexShrink: 0,
+        }}>{formatCount(item.stashCount)}</div>
+        <div style={{ flex: 1 }} />
         <button
-          onClick={() => onStash(item)}
+          onClick={e => { e.stopPropagation(); onStash(item) }}
           style={{
-            padding: '8px 16px', background: isStashed ? '#333' : '#ff3c00',
-            color: '#fff', border: 'none', borderRadius: 20,
-            fontFamily: 'Bebas Neue, sans-serif', fontSize: 15, letterSpacing: 1,
-            cursor: 'pointer', width: 110,
+            height: 26, minWidth: 60, padding: '0 8px',
+            background: isStashed ? '#333' : '#ff3c00',
+            color: '#fff', border: 'none', borderRadius: 13,
+            fontFamily: 'Bebas Neue, sans-serif', fontSize: 9, letterSpacing: 1,
+            cursor: 'pointer', flexShrink: 0,
           }}
         >
-          {isStashed ? 'STASHED \u2713' : '+STASH'}
+          {isStashed ? '\u2713' : 'STASH'}
         </button>
         <button
-          onClick={() => onCopy(item)}
+          onClick={e => { e.stopPropagation(); onCopy(item) }}
           style={{
-            padding: '8px 16px', background: 'transparent', color: '#fff',
-            border: '1px solid rgba(255,255,255,0.4)', borderRadius: 20,
-            fontFamily: 'Bebas Neue, sans-serif', fontSize: 15, letterSpacing: 1,
-            cursor: 'pointer', width: 110,
+            height: 26, minWidth: 60, padding: '0 8px',
+            background: '#1a1a1a', color: '#ccc',
+            border: '1px solid rgba(255,255,255,0.15)', borderRadius: 13,
+            fontFamily: 'Bebas Neue, sans-serif', fontSize: 9, letterSpacing: 1,
+            cursor: 'pointer', flexShrink: 0,
           }}
         >
           COPY
         </button>
-        <div style={{
-          fontFamily: 'Space Mono, monospace', fontSize: 10, color: '#777',
-          letterSpacing: 0.5,
-        }}>
-          {formatCount(item.stashCount)} stashed
-        </div>
       </div>
     </div>
   )
