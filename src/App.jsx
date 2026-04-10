@@ -1113,11 +1113,14 @@ export default function App() {
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
           flexShrink: 0,
         }}>
-          <div style={{
-            fontFamily: 'Bebas Neue, sans-serif', fontSize: 28,
-            letterSpacing: 4, color: '#fff',
-          }}>
-            CHUCK<span style={{ color: '#ff3c00' }}>L</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <img src="/chuckl-icon.jpg" style={{ width: 36, height: 36, borderRadius: 8 }} />
+            <div style={{
+              fontFamily: 'Bebas Neue, sans-serif', fontSize: 28,
+              letterSpacing: 4, color: '#fff',
+            }}>
+              CHUCK<span style={{ color: '#ff3c00' }}>L</span>
+            </div>
           </div>
           <div style={{
             fontFamily: 'Space Mono, monospace', fontSize: 10, color: '#444', letterSpacing: 1,
