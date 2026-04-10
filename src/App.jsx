@@ -1114,7 +1114,7 @@ export default function App() {
           flexShrink: 0,
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-            <img src="/chuckl-icon.jpg" style={{ width: 36, height: 36, borderRadius: 8 }} />
+            <img src="/chuckl-icon.png" style={{ width: 36, height: 36, borderRadius: 8 }} />
             <div style={{
               fontFamily: 'Bebas Neue, sans-serif', fontSize: 28,
               letterSpacing: 4, color: '#fff',
